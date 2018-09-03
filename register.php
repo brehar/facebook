@@ -1,14 +1,7 @@
 <?php
 	require('secure/Access.php');
 
-	$email = $_POST['email'];
-	$firstname = $_POST['firstname'];
-	$lastname = $_POST['lastname'];
-	$password = $_POST['password'];
-	$birthday = $_POST['birthday'];
-	$gender = $_POST['gender'];
-
-	if (empty($email) || empty($firstname) || empty($lastname) || empty($password) || empty($birthday) || empty($gender)) {
+	if (empty($_POST['email']) || empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['password']) || empty($_POST['birthday']) || empty($_POST['gender'])) {
 		$return['status'] = '400';
 		$return['message'] = 'Missing user information.';
 
@@ -17,14 +10,14 @@
 		return;
 	}
 
-	$email = htmlentities($email);
-	$firstname = htmlentities($firstname);
-	$lastname = htmlentities($lastname);
-	$password = htmlentities($password);
-	$birthday = htmlentities($birthday);
-	$gender = htmlentities($gender);
+	$email = htmlentities($_POST['email']);
+	$firstname = htmlentities($_POST['firstname']);
+	$lastname = htmlentities($_POST['lastname']);
+	$password = htmlentities($_POST['password']);
+	$birthday = htmlentities($_POST['birthday']);
+	$gender = htmlentities($_POST['gender']);
 
-	$salt = openssl_random_pseudo_bytes(100);
+	$salt = openssl_random_pseudo_bytes(20);
 	$encryptedPassword = sha1($password . $salt);
 
 	$access = new Access();
